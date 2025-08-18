@@ -1,0 +1,23 @@
+{
+    // ...existing code...
+    "version": "0.2.0",
+    "configurations": [
+
+    
+
+        {
+            "name": "Executar C no Terminal",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/P01.exe", // Altere para o nome do seu executável
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "console": "integratedTerminal",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb"
+        }
+    ]
+}
