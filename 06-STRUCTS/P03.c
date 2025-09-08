@@ -4,6 +4,7 @@ Escreva uma função multFraction que recebe dois argumentos do tipo Fraction, m
 
 #include <stdio.h>
 
+
 struct tfraction 
 {
     int numerador, denominador;
