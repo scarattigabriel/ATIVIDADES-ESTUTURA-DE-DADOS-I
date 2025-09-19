@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "triangle.h"
 #include <math.h>
+#define EPS 1e-6
 
 void setTriangle(trngl *triangle, int lado_a, int lado_b, int lado_c)
 {
@@ -45,7 +46,7 @@ int getPerimeter(trngl triangle)
     return triangle.lado_a + triangle.lado_b + triangle.lado_c;
 }
 
-//p = (a + b + c) / 2
+
 
 float getArea(trngl triangle)
 {
@@ -55,29 +56,22 @@ float getArea(trngl triangle)
 }
 
 
-float cosA (trngl triangle)
-{
-    return (pow(triangle.lado_b, 2) + pow(triangle.lado_c, 2) - pow(triangle.lado_a, 2)) / (2 * triangle.lado_b * triangle.lado_c);
+float cosA(trngl triangle) {
+    return (pow(triangle.lado_b, 2) + pow(triangle.lado_c, 2) - pow(triangle.lado_a, 2)) / 
+           (2 * triangle.lado_b * triangle.lado_c);
 }
 
-float cosB (trngl triangle)
-{
-    return (pow(triangle.lado_a, 2) + pow(triangle.lado_c, 2) - pow(triangle.lado_b, 2)) / (2 * triangle.lado_a * triangle.lado_c);
+float cosB(trngl triangle) {
+    return (pow(triangle.lado_a, 2) + pow(triangle.lado_c, 2) - pow(triangle.lado_b, 2)) / 
+           (2 * triangle.lado_a * triangle.lado_c);
 }
 
-float cosC (trngl triangle)
-{
-    return (pow(triangle.lado_a, 2) + pow(triangle.lado_b, 2) - pow(triangle.lado_c, 2)) / (2 * triangle.lado_a * triangle.lado_b);
-}
 
-int isSimilar(trngl triangle1, trngl triangle2)
-{ 
-    if ((cosA(triangle1) == cosA(triangle2)) && (cosB(triangle1) == cosB(triangle2)) && (cosC(triangle1) == cosC(triangle2)))
-    {
-        return 1;
+
+int isSimilar(trngl triangle1, trngl triangle2) { 
+    if (fabs(cosA(triangle1) - cosA(triangle2)) < EPS &&
+        fabs(cosB(triangle1) - cosB(triangle2)) < EPS) {
+        return 1; 
     }
-    else{
-        return 0;
-    }
-
+    return 0;     
 }
