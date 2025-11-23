@@ -31,7 +31,29 @@ void setValue (sentinela *s, int v)//INSERIR NO FIM
 	return;
 }
 
-void delValue(sentinela *s, int key)
+void InserirMeio(sentinela *s, int v, doub *posicao)
+{
+    doub *p;
+    p=(doub *)malloc(sizeof(doub)); // passo 1
+    p->value=v;   // passo 2
+    p->next=NULL; // passo 2
+    p->prev=NULL; // passo 2
+    //passo 3 - encadear
+    if (posicao==s->head) //inserir no inicio
+    {
+        p->next=s->head;
+        s->head->prev=p;
+        s->head=p;
+        return;
+    }
+    p->next=posicao;
+    p->prev=posicao->prev;
+    posicao->prev->next=p;
+    posicao->prev=p;
+    return;
+}
+
+void delValue(sentinela *s, int key)//FUNÇÃO DE EXCLUIR
 {
     doub *aux;
     for (aux = s->head; aux != NULL && aux->value != key; aux = aux->next);
@@ -73,6 +95,19 @@ void printList(sentinela s)
 	}
 }
 
+//PESQUISAR ELEMENTO NA LISTA
+doub *SearchList(sentinela s, int key)
+{
+    doub *aux;
+    for (aux = s.head; aux != NULL; aux = aux->next)
+    {
+        if (aux->value == key)
+        {
+            return aux;
+        }
+    }
+    return NULL;
+}
 
 int main()
 {

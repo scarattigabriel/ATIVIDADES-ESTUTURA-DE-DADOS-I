@@ -49,13 +49,13 @@ int main()
     return 0;
 }
 
-void initQueue(Queue *queue)
+void initQueue(Queue *queue)//Inicializa a fila
 {
     queue->head = NULL;
     queue->tail = NULL;
 }
 
-void enQueue(Queue *queue, Item item)
+void enQueue(Queue *queue, Item item)//Insere um item na fila
 {
     EQueue *aux;
 
@@ -79,7 +79,7 @@ void enQueue(Queue *queue, Item item)
     }
 }
 
-void deQueue(Queue *queue, Item *item)
+void deQueue(Queue *queue, Item *item)//Remove um item da fila
 {
     EQueue *aux;
 
@@ -104,7 +104,7 @@ void deQueue(Queue *queue, Item *item)
     // Libera a memoria alocada para o elemento removido
     free(aux);
 }
-int isEmpty(Queue *queue)
+int isEmpty(Queue *queue)//Verifica se a fila está vazia
 {
     return (queue->head == NULL);
 }
@@ -116,7 +116,7 @@ int isEmpty(Queue *queue)
     else
         return 0;
 }*/
-void freeAll(Queue *queue)
+void freeAll(Queue *queue)//Libera toda a memória alocada para a fila
 {
     EQueue *aux;
 

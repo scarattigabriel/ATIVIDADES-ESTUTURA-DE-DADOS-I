@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+/// ESTRUTURA DA LISTA DUPLAMENTE ENCADEADA COM SENTINELA
 struct tdoub {
     char c;
     struct tdoub *next, *prev;
@@ -12,7 +12,7 @@ struct tsentinel
 typedef struct tdoub doub;
 typedef struct tsentinel sentinel;
 
-void insertList(sentinel *s, char cr)
+void insertList(sentinel *s, char cr)//FUNÇÃO DE INSERIR NO FIM
 {
     doub *d;
     //alocar
@@ -36,7 +36,7 @@ void insertList(sentinel *s, char cr)
     return;
 }
 
-
+//PRINTAR A LISTA
 void printList(sentinel s)
 {
     doub *aux;
@@ -46,7 +46,7 @@ void printList(sentinel s)
     }
 
 }
-
+//FUNÇÃO DE EXCLUIR
 void DeleteList(sentinel*s, char cr)
 {
     doub *aux;
@@ -90,7 +90,7 @@ void DeleteList(sentinel*s, char cr)
     free(aux);
     return;
 }
-
+//PESQUISAR ELEMENTO NA LISTA
 doub *SearchList(sentinel s, char cr)
 {
     doub *aux;
