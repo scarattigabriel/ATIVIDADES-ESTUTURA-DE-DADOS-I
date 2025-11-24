@@ -17,7 +17,7 @@ atualizar o estoque após a venda*/
 #include <stdio.h>
 #include <stdlib.h>
 
-//ESTRUTURA DO PRODUTO
+// ESTRUTURA DO PRODUTO
 struct tproduto
 {
     int codigo;
@@ -26,7 +26,7 @@ struct tproduto
 };
 typedef struct tproduto produto;
 
-//ESTRUTURA DA ÁRVORE BINÁRIA DE BUSCA
+// ESTRUTURA DA ÁRVORE BINÁRIA DE BUSCA
 struct tnode
 {
     produto p;                        // estrutura do produto
@@ -34,12 +34,11 @@ struct tnode
 };
 typedef struct tnode node;
 
-
-//FUNÇÃO DE CRIAÇÃO DO PRODUTO
+// FUNÇÃO DE CRIAÇÃO DO PRODUTO
 node *criarProduto()
 {
-    node *novo_n = (node *)malloc(sizeof(node));//ALLOCA MEMÓRIA PARA O NOVO NÓ
-    //ATRIBUI OS VALORES PARA O NÓ
+    node *novo_n = (node *)malloc(sizeof(node)); // ALLOCA MEMÓRIA PARA O NOVO NÓ
+    // ATRIBUI OS VALORES PARA O NÓ
     printf("Digite o codigo: ");
     scanf("%d", &novo_n->p.codigo);
     printf("Digite o nome: ");
@@ -50,28 +49,28 @@ node *criarProduto()
     scanf("%f", &novo_n->p.valor_venda);
     printf("Quantidade em estoque: ");
     scanf("%f", &novo_n->p.estoque);
-    //NULLIFICA OS PONTEIROS
+    // NULLIFICA OS PONTEIROS
     novo_n->esquerda = NULL;
     novo_n->direita = NULL;
     return novo_n;
 }
 
-//FUNÇÃO DE ISERERIR O PRODUTO CRIADO NA ÁRVORE
+// FUNÇÃO DE ISERERIR O PRODUTO CRIADO NA ÁRVORE
 node *inserirProduto(node *raiz, node *novo_n)
 {
-    if (raiz == NULL)//VERIFICA SE A RAIZ É NULA. SE SIM, RETORNA O NOVO NÓ
+    if (raiz == NULL) // VERIFICA SE A RAIZ É NULA. SE SIM, RETORNA O NOVO NÓ
     {
         return novo_n;
     }
-    else //CAI NO ELSE SE A RAIZ NÃO FOR NULA
+    else // CAI NO ELSE SE A RAIZ NÃO FOR NULA
     {
         if (novo_n->p.codigo < raiz->p.codigo)
         {
-            raiz->esquerda = inserirProduto(raiz->esquerda, novo_n);//SE O CÓDGIO DO NOVO NÓ FOR MENOR, VAI PARA A ESQUERDA
+            raiz->esquerda = inserirProduto(raiz->esquerda, novo_n); // SE O CÓDGIO DO NOVO NÓ FOR MENOR, VAI PARA A ESQUERDA
         }
         else if (novo_n->p.codigo > raiz->p.codigo)
         {
-            raiz->direita = inserirProduto(raiz->direita, novo_n);//SE O CÓDIGO DI NOV NO FR MAIOR VAI PARA A DIREITA
+            raiz->direita = inserirProduto(raiz->direita, novo_n); // SE O CÓDIGO DI NOV NO FR MAIOR VAI PARA A DIREITA
         }
         else if (novo_n->p.codigo == raiz->p.codigo) // SE O CÓDIGO JA EXISTIR RETORNA MENSAGEM DE ERRO
         {
@@ -83,133 +82,141 @@ node *inserirProduto(node *raiz, node *novo_n)
     return raiz;
 }
 
-
-//FUNÇÃO PARA BUSCAR SE HÁ UM PRODUTO NA ARVORE PELO SEU CÓDIGO
+// FUNÇÃO PARA BUSCAR SE HÁ UM PRODUTO NA ARVORE PELO SEU CÓDIGO
 node *buscarProduto(node *raiz, int codigo)
 {
     if (raiz == NULL)
     {
-        return NULL;//código não encontrado
+        return NULL; // código não encontrado
     }
-    if (raiz->p.codigo == codigo) return raiz;//achou o código
+    if (raiz->p.codigo == codigo)
+        return raiz; // achou o código
 
     if (codigo < raiz->p.codigo)
     {
-        return buscarProduto(raiz->esquerda, codigo);//busca na esquerda
+        return buscarProduto(raiz->esquerda, codigo); // busca na esquerda
     }
     else
     {
-        return buscarProduto(raiz->direita, codigo);//busca na direita
+        return buscarProduto(raiz->direita, codigo); // busca na direita
     }
 }
 
-//FUNÇÃO PARA ATUALIZAR O PRODUTO
-void atualizarProdutor(node *raiz)
+// FUNÇÃO PARA ATUALIZAR O PRODUTO
+void atualizarProduto(node *raiz)
 {
     int codigo;
     printf("Digite o código do produto que deseja atualizar: ");
     scanf("%d", &codigo);
-    if(buscarProduto(raiz, codigo) == NULL)//se buscar o produto e não encontrar
+    if (buscarProduto(raiz, codigo) == NULL) // se buscar o produto e não encontrar
     {
         printf("Produto não encontrado!\n");
         return;
     }
     else
     {
-        node *produto_atualizar = buscarProduto(raiz, codigo);//se encontrar, armazena o nó em uma nova vairavel
-        //atribui os novos valores
+        node *produto_atualizar = buscarProduto(raiz, codigo); // se encontrar, armazena o nó em uma nova vairavel
+        // atribui os novos valores
         printf("Digite o novo valor de custo: ");
         scanf("%f", &produto_atualizar->p.valor_custo);
-        
+
         printf("Digite o novo valor de venda: ");
         scanf("%f", &produto_atualizar->p.valor_venda);
-        
+
         printf("Digite o novo estoque: ");
         scanf("%f", &produto_atualizar->p.estoque);
 
         printf("Produto atualizado!");
-
     }
-
-
 }
 
-//FUNÇÃO PARA ACHAR O MÍNIMO DA SUBÁRVORE
-node *minimo(node *raiz)
-{
-    node *atual = raiz;
-    //Percorre a árvore até encontrar o nó mais à esquerda
-    while (atual && atual->esquerda != NULL)
-    {
-        atual = atual->esquerda;
-    }
-    return atual;
-}
 
-//FUNÇÃO DE EXCLUSÃO DO PRODUTO
+
+// FUNÇÃO DE EXCLUSÃO DO PRODUTO
 node *excluirProduto(node *raiz, int codigo)
 {
 
-    if (raiz == NULL)//se a rraiz for nula é porque não encontrou o produto
+    if (raiz == NULL) // se a rraiz for nula é porque não encontrou o produto
     {
         printf("Produto não encontrado!\n");
         return raiz;
     }
 
-    if (codigo < raiz->p.codigo)//se o código for menor, vai para a esquerda
+    if (codigo < raiz->p.codigo) // se o código for menor, vai para a esquerda
         raiz->esquerda = excluirProduto(raiz->esquerda, codigo);
-    else if (codigo > raiz->p.codigo)//se for maior vai para a direita
+    else if (codigo > raiz->p.codigo) // se for maior vai para a direita
         raiz->direita = excluirProduto(raiz->direita, codigo);
     else
     {
         // Nó encontrado
-        
+
         // Caso 1: Sem filhos ou 1 filho
         if (raiz->esquerda == NULL)
         {
-            node *temp = raiz->direita;
+            node *aux = raiz->direita;
             free(raiz);
             printf("Produto excluido com sucesso!\n");
-            return temp;
+            return aux;
         }
         else if (raiz->direita == NULL)
         {
-            node *temp = raiz->esquerda;
+            node *aux = raiz->esquerda;
             free(raiz);
             printf("Produto excluido com sucesso!\n");
-            return temp;
+            return aux;
+        }
+        node *aux = raiz->direita;    // Começa na direita
+        while (aux->esquerda != NULL) // Desce tudo para a esquerda
+        {
+            aux = aux->esquerda;
         }
 
-        // Caso 2: 2 filhos (pega o menor da subarvore direita)
-        node *temp = minimo(raiz->direita);
-        
         // Copia os dados do sucessor para este nó
-        raiz->p = temp->p;
+        raiz->p = aux->p;
 
-        // Exclui o sucessor duplicado
-        raiz->direita = excluirProduto(raiz->direita, temp->p.codigo);
+        // Exclui o sucessor duplicado (chama a recursão novamente)
+        raiz->direita = excluirProduto(raiz->direita, aux->p.codigo);
     }
     return raiz;
 }
 
-
-
-
-//FUNÇÃO PARA LISTAR OS PRODUTOS in order 
-void listarProduto(node *raiz)
+void listarProduto(node *raiz, int filtro)
 {
-    if (raiz == NULL)//if a raiz for nula, retorna
-    {
+    if (raiz == NULL)
         return;
+
+    // 1. Visita subárvore esquerda
+    listarProduto(raiz->esquerda, filtro);
+
+    // 2. Lógica de decisão: Devo imprimir este produto?
+    int imprimir = 0; // Começa assumindo que não
+
+    if (filtro == 0)
+    {
+        imprimir = 1; // Se o filtro é 0, imprime sempre
     }
-    listarProduto(raiz->esquerda);//percorre a subárvore esquerda
-    //imprime
-    printf("Código: %d\nNome: %s\nEstoque:%f\nValor de custo: %f\nValor de venda:%f", raiz->p.codigo, raiz->p.nome, raiz->p.estoque, raiz->p.valor_custo, raiz->p.valor_venda);
-    //percorre a subárvore direita
-    listarProduto(raiz->direita);
+    else if (filtro == 1 && raiz->p.estoque > 0)
+    {
+        imprimir = 1; // Se filtro é 1, só imprime se tiver estoque positivo
+    }
+    else if (filtro == 2 && raiz->p.estoque <= 0)
+    {
+        imprimir = 1; // Se filtro é 2, só imprime se estoque for zero ou negativo
+    }
+
+    // 3. Imprime os dados se a variável 'imprimir' for verdadeira
+    if (imprimir == 1)
+    {
+        printf("Código: %d\nNome: %s\nEstoque: %.2f \nPreço Venda: R$ %.2f\nCusto: R$ %.2f\n", raiz->p.codigo, raiz->p.nome, raiz->p.estoque, raiz->p.valor_venda, raiz->p.valor_custo);
+        printf("\n");
+
+    }
+
+    // 4. Visita subárvore direita
+    listarProduto(raiz->direita, filtro);
 }
 
-//FUNÇÃO DE VENDA DE PRODTUO
+// FUNÇÃO DE VENDA DE PRODTUO
 node *venderProduto(node *raiz)
 {
     int codigo, quantidade;
@@ -218,68 +225,76 @@ node *venderProduto(node *raiz)
     printf("Digite a quantidade que deseja vender: ");
     scanf("%d", &quantidade);
 
-    node *produto_vender = buscarProduto(raiz, codigo);//busca o produto pelo código
-    if (produto_vender == NULL)//se não encontrar o produto
+    node *produto_vender = buscarProduto(raiz, codigo); // busca o produto pelo código
+    if (produto_vender == NULL)                         // se não encontrar o produto
     {
         printf("Produto não encontrado!\n");
         return raiz;
-    }   
-    if (produto_vender->p.estoque < quantidade)//se o estoque for menor que a quantidade desejada
+    }
+    if (produto_vender->p.estoque < quantidade) // se o estoque for menor que a quantidade desejada
     {
         printf("Estoque insuficiente!\n");
         return raiz;
-    }   
-    produto_vender->p.estoque -= quantidade;//descresse a quantidade vendida do estoque
-    float total_venda = quantidade * produto_vender->p.valor_venda; //calcula o total da venda
+    }
+    produto_vender->p.estoque -= quantidade;                        // descresse a quantidade vendida do estoque
+    float total_venda = quantidade * produto_vender->p.valor_venda; // calcula o total da venda
     printf("Venda realizada com sucesso!\n");
     printf("Produto: %s\nQuantidade vendida: %d\nValor total da venda: %.2f\n", produto_vender->p.nome, quantidade, total_venda);
     return raiz;
 }
 
-
-
-
-
 int main()
 {
     node *raiz = NULL;
-    while (1)
+    int op;
+    while (op != 6)
     {
-        int op;
-        printf("1-Cadastrar produto\n"
-               "2-Atualizar produto\n"
-               "3-Excluir produto\n"
-               "4-Venda\n"
-               "5-Listar Produtos\n"
-               "6-Sair\n:");
+
+        printf("\n\n1-Cadastrar produto\n2-Atualizar produto\n3-Excluir produto\n4-Venda\n5-Listar Produtos\n6-Sair\n:");
         scanf("%d", &op);
         switch (op)
         {
-            
+
         case 1:
             raiz = inserirProduto(raiz, criarProduto());
             break;
         case 2:
-            atualizarProdutor(raiz);
+            atualizarProduto(raiz);
             break;
         case 3:
-            {
-                int codigo;
-                printf("Digite o código do produto que deseja excluir: ");
-                scanf("%d", &codigo);
-                raiz = excluirProduto(raiz, codigo);
-            }
-            break;
+        {
+            int codigo;
+            printf("Digite o código do produto que deseja excluir: ");
+            scanf("%d", &codigo);
+            raiz = excluirProduto(raiz, codigo);
+        }
+        break;
         case 4:
             raiz = venderProduto(raiz);
             break;
         case 5:
-            listarProduto(raiz);
+            
+            printf("\n0 - Listar todos os produtos\n1 - Listar produtos disponíveis\n2 - Listar produtos esgotados\n");
+            int filtro;
+            scanf("%d", &filtro);
+
+            // Validação simples para não passar código errado
+            if (filtro < 0 || filtro > 2)
+            {
+                printf("Opção inválida!\n");
+            }
+            else
+            {
+                listarProduto(raiz, filtro);
+            }
+            break;
+
         case 6:
-            exit(0);
+            printf("Programa encerrado!\n");
             break;
 
         default:
+            printf("Opção inválida!\n");
             break;
         }
     }
