@@ -255,6 +255,7 @@ int main()
         scanf("%d", &op);
         switch (op)
         {
+            
         case 1:
             raiz = inserirProduto(raiz, criarProduto());
             break;
